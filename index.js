@@ -8,7 +8,7 @@ class ToDo {
             title,
             id: this.tasks.length + 1,
             description,
-            taskDate: date,
+            date: new Date().toLocaleString(),
             isComplited: false,
             priority: true,
         })
@@ -39,30 +39,26 @@ class ToDo {
         }))
     }
 
-    completeTask(id, isComplited, title,description,priority) {
+    completeTask(id, isComplited, title, description, priority) {
         this.tasks = this.tasks.map((item) => {
-            if(item.id === id) {
+            if (item.id === id) {
                 return {
                     ...item,
                     isComplited,
                     title,
-                    description, 
-                    priority,                  
+                    description,
+                    priority,
                 }
             }
             return item;
         })
     }
 
-    sortData() {
-        this.tasks = this.tasks.sort((a, b) => {
-            if (a.date - b.date) {
-                return 1;
-            }
-            if (a.date > b.date) {
-                return 1;
-            }
-            return 0;
+    sortData(date) {
+        this.tasks.sort(function (a, b) {
+            return new Date(b.date) - new Date(a.date);
+        }); tasks.sort(function (a, b) {
+            return new Date(b.date) - new Date(a.date);
         });
     }
 
@@ -79,15 +75,15 @@ class ToDo {
     }
 
     sortPriority() {
-        this.tasks = this.tasks.sort((a,b) => a.priority > b.priority ? 1 : -1)
+        this.tasks = this.tasks.sort((a, b) => a.priority > b.priority ? 1 : -1)
     }
 }
 
 const todolist = new ToDo();
 
-todolist.addTask('Выучить JS','Выучить методы массива');
-todolist.addTask('Выучить React','Выучить объекты');
-todolist.addTask('Выучить Angular','Выучить все');
-todolist.completeTask(1,'true','Выучить JS','Разобраться с ...','false')
+todolist.addTask('Выучить JS', 'Выучить методы массива');
+todolist.addTask('Выучить React', 'Выучить объекты');
+todolist.addTask('Выучить Angular', 'Выучить все');
+todolist.completeTask(1, 'true', 'Выучить JS', 'Разобраться с ...', 'false')
 todolist.sortPriority()
 console.log(todolist.showAllTasks());
